@@ -1,8 +1,33 @@
 # Mongoid::Falsehoods
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mongoid/falsehoods`. To experiment with that code, run `bin/console` for an interactive prompt.
+Querying fields in Mongo for those with `null` values will often look like this:
 
-TODO: Delete this and the text above, and describe your gem
+`db.users.find({ deleted_at: null })`
+
+This is inefficient, even if you've indexed `users.deleted_at` because Mongo
+has to look for both documents that have a `null` value in the `deleted_at`
+field and documents that do not have a `deleted_at` field set at all. If you
+look at the explain results, you'll see `"stage": "FETCH"` instead of
+`"stage": "IDXSCAN"`, which is really what we want.
+
+Mongoid does not support storing `false` instead of `null` for `DateTime` fields.
+
+This gem convinces it to allow doing so.
+
+I'd encourage you to do some baseline explain queries, look at the
+`executionTimeMillis` before the change. Then, add the Gem, migrate existing
+data, and see the difference. This is Mongo's estimation of how long it'll take to run the quey.
+
+Here's an example:
+
+```ruby
+# before
+User.where(deleted_at: nil).explain['executionStats']['executionTimeMillis'] # 56
+# after
+User.where(deleted_at: false).explain['executionStats']['executionTimeMillis'] #=> 41
+```
+
+The improvement will vary based on the number of documents. That's with around 8000.
 
 ## Installation
 
@@ -22,7 +47,43 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Turn code from this:
+
+```ruby
+field :deleted_at, type: DateTime
+
+index({ deleted_at: 1 }, background: true)
+
+def self.not_deleted
+  where(deleted_at: nil)
+end
+
+def active?
+  deleted_at.nil?
+end
+```
+
+to
+
+```ruby
+field :deleted_at, type: DateTime, default: false
+
+index({ deleted_at: 1 }, background: true)
+
+def self.not_deleted
+  where(deleted_at: false)
+end
+
+def active?
+  !deleted_at
+end
+```
+
+You'll also have to migrate existing data:
+
+```ruby
+User.where(deleted_at: null).update_all(deleted_at: false)
+```
 
 ## Development
 
