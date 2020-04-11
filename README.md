@@ -22,12 +22,12 @@ Here's an example:
 
 ```ruby
 # before
-User.where(deleted_at: nil).explain['executionStats']['executionTimeMillis'] # 56
+User.where(deleted_at: nil).explain['executionStats']['executionTimeMillis'] # 4197
 # after
-User.where(deleted_at: false).explain['executionStats']['executionTimeMillis'] #=> 41
+User.where(deleted_at: false).explain['executionStats']['executionTimeMillis'] #=> 3055
 ```
 
-The improvement will vary based on the number of documents. That's with around 8000.
+So by switching from `null` to `false`, we shaved off about a second from this query. The improvement will vary based on the number of documents. That's with around 790,000.
 
 ## Installation
 
