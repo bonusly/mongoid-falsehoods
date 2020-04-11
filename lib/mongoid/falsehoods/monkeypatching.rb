@@ -1,3 +1,5 @@
+require 'mongoid'
+
 class FalseClass
   def __evolve_time__
     false

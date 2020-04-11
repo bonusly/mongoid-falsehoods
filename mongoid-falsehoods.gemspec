@@ -1,20 +1,20 @@
-require_relative 'lib/mongo/falsehoods/version'
+require_relative 'lib/mongoid/falsehoods/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "mongo-falsehoods"
-  spec.version       = Mongo::Falsehoods::VERSION
+  spec.name          = "mongoid-falsehoods"
+  spec.version       = Mongoid::Falsehoods::VERSION
   spec.authors       = ["Jon Evans"]
   spec.email         = ["jon@bonus.ly"]
 
   spec.summary       = %q{Modify Mongoid to allow storing `DateTime` fields as `false` instead of `null`.}
   spec.description   = %q{Mongo indexes do not handle querying by null values well. If we store them as false instead, we get improved index usage and faster queries.}
-  spec.homepage      = "https://github.com/bonusly/mongo-falsehoods"
+  spec.homepage      = "https://github.com/bonusly/mongoid-falsehoods"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/bonusly/mongo-falsehoods"
-  spec.metadata["changelog_uri"] = "https://github.com/bonusly/mongo-falsehoods/blob/master/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/bonusly/mongoid-falsehoods"
+  spec.metadata["changelog_uri"] = "https://github.com/bonusly/mongoid-falsehoods/blob/master/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -24,4 +24,6 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency('mongoid')
 end

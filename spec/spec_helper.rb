@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "mongo/falsehoods"
+require "mongoid/falsehoods"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
