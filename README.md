@@ -29,6 +29,8 @@ User.where(deleted_at: false).explain['executionStats']['executionTimeMillis'] #
 
 So by switching from `null` to `false`, we shaved off about a second from this query. The improvement will vary based on the number of documents. That's with around 790,000.
 
+Hopefully Mongo will address [this Jira ticket](https://jira.mongodb.org/browse/SERVER-18861) at some point and make this gem unnecessary.
+
 ## Installation
 
 Add this line to your application's Gemfile:
