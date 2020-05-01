@@ -105,3 +105,11 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the Mongo::Falsehoods project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/bonusly/mongoid-falsehoods/blob/master/CODE_OF_CONDUCT.md).
+
+## About Bonusly
+
+![Bonusly Logo](https://bonusly-files.s3.amazonaws.com/bonusly-logo.png?test=2)
+
+Bonusly is the fun and easy way to engage all of your employees and improve retention and productivity at every level of your organization.
+
+Check out [our product](https://bonus.ly) or [our engineering blog](https://engineering.bonus.ly).
