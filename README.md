@@ -1,3 +1,6 @@
+# MOVED TO GITLAB
+https://gitlab.com/bonusly/public/mongoid-falsehoods
+
 # Mongoid::Falsehoods
 
 Querying fields in Mongo for those with `null` values will often look like this:
